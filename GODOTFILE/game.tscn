@@ -1,0 +1,99 @@
+[gd_scene load_steps=6 format=3 uid="uid://dedn4fi7fuknk"]
+
+[ext_resource type="PackedScene" uid="uid://bxxjrynuh4rwh" path="res://character.tscn" id="1_51gwe"]
+[ext_resource type="Script" path="res://game.gd" id="1_clgmo"]
+[ext_resource type="PackedScene" uid="uid://cp414x441b3s3" path="res://tree.tscn" id="2_hukpl"]
+[ext_resource type="PackedScene" uid="uid://xf5j0v5pmd1u" path="res://slime.tscn" id="3_kx1ok"]
+
+[sub_resource type="Curve2D" id="Curve2D_1m74y"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1650, -944, 0, 0, 0, 0, 2600.81, -821.929, 0, 0, 0, 0, 2708.61, 1840.7, 0, 0, 0, 0, -1650, 1948)
+}
+point_count = 4
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_clgmo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -128
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -1477.0
+offset_top = -1205.0
+offset_right = 3007.0
+offset_bottom = 1733.0
+color = Color(0.376471, 0.72549, 0, 1)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.0
+blend_mode = 1
+
+[node name="character" parent="." instance=ExtResource("1_51gwe")]
+position = Vector2(508, 323)
+
+[node name="aa" type="Path2D" parent="character"]
+position = Vector2(-165, -181)
+scale = Vector2(0.543752, 0.439142)
+curve = SubResource("Curve2D_1m74y")
+
+[node name="as" type="PathFollow2D" parent="character/aa"]
+unique_name_in_owner = true
+position = Vector2(-1650, -944)
+rotation = 0.0287093
+
+[node name="tree" parent="." instance=ExtResource("2_hukpl")]
+position = Vector2(208, 505)
+
+[node name="tree2" parent="." instance=ExtResource("2_hukpl")]
+position = Vector2(740, 589)
+
+[node name="tree3" parent="." instance=ExtResource("2_hukpl")]
+position = Vector2(1106, 502)
+
+[node name="tree4" parent="." instance=ExtResource("2_hukpl")]
+position = Vector2(1289, 303)
+
+[node name="tree5" parent="." instance=ExtResource("2_hukpl")]
+position = Vector2(969, 149)
+
+[node name="tree6" parent="." instance=ExtResource("2_hukpl")]
+position = Vector2(216, 92)
+
+[node name="slime" parent="." instance=ExtResource("3_kx1ok")]
+position = Vector2(367, 630)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.75
+autostart = true
+
+[node name="gg" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="gg"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.67451)
+
+[node name="Label" type="Label" parent="gg/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.5
+offset_top = -11.5
+offset_right = 44.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 161
+text = "GAME OVER"
+
+[connection signal="dead" from="character" to="." method="_on_character_dead"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

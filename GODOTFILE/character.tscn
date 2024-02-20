@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://bxxjrynuh4rwh"]
+
+[ext_resource type="Script" path="res://char.gd" id="1_wp1t0"]
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="2_o460x"]
+[ext_resource type="PackedScene" uid="uid://c3b2hyla42hpe" path="res://gun.tscn" id="3_pgils"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q177f"]
+size = Vector2(79, 99)
+
+[sub_resource type="Gradient" id="Gradient_jlhl1"]
+offsets = PackedFloat32Array(0.00869565, 0.66087)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cyrhe"]
+gradient = SubResource("Gradient_jlhl1")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lf8sp"]
+radius = 82.0549
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mngjg"]
+bg_color = Color(0.231373, 0.231373, 0.231373, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvwbg"]
+bg_color = Color(0, 0.72549, 0.223529, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="character" type="CharacterBody2D"]
+platform_floor_layers = 4294967040
+script = ExtResource("1_wp1t0")
+
+[node name="HappyBoo" parent="." instance=ExtResource("2_o460x")]
+position = Vector2(0, 27)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -17)
+shape = SubResource("RectangleShape2D_q177f")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(1.99995, -1)
+scale = Vector2(10.1719, 9.10156)
+energy = 0.0
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_cyrhe")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Area2D" parent="." instance=ExtResource("3_pgils")]
+position = Vector2(-1, -1)
+
+[node name="hitbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource("CircleShape2D_lf8sp")
+
+[node name="bar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -81.0
+offset_top = -114.0
+offset_right = 80.0
+offset_bottom = -87.0
+theme_override_styles/background = SubResource("StyleBoxFlat_mngjg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cvwbg")
+value = 100.0
+show_percentage = false
